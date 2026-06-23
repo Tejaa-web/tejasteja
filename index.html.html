@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C++ End Semester Study Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f4f8; color: #1a202c; line-height: 1.7; }
+  header { background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 100%); color: white; padding: 2rem; text-align: center; }
+  header h1 { font-size: 1.8rem; font-weight: 700; }
+  header p { opacity: 0.85; margin-top: 0.4rem; font-size: 0.95rem; }
+  .tabs { display: flex; gap: 8px; padding: 1.2rem 1.5rem 0; background: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .tab-btn { padding: 0.6rem 1.2rem; border: 2px solid transparent; border-radius: 8px 8px 0 0; background: #f7fafc; cursor: pointer; font-size: 0.9rem; font-weight: 600; color: #4a5568; transition: all 0.2s; white-space: nowrap; }
+  .tab-btn:hover { background: #ebf8ff; color: #2b6cb0; }
+  .tab-btn.active { background: #2b6cb0; color: white; border-color: #2b6cb0; }
+  .unit-badge { display: inline-block; font-size: 0.7rem; background: rgba(255,255,255,0.2); border-radius: 4px; padding: 1px 6px; margin-left: 6px; }
+  .tab-btn:not(.active) .unit-badge { background: #e2e8f0; color: #718096; }
+  main { max-width: 860px; margin: 0 auto; padding: 1.5rem; }
+  .unit-section { display: none; }
+  .unit-section.active { display: block; }
+  .unit-header { background: white; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1rem; border-left: 5px solid #2b6cb0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .unit-header h2 { font-size: 1.25rem; color: #1a365d; }
+  .unit-header p { color: #718096; font-size: 0.88rem; margin-top: 0.3rem; }
+  .question-card { background: white; border-radius: 10px; margin-bottom: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); overflow: hidden; }
+  .question-btn { width: 100%; text-align: left; padding: 1rem 1.25rem; background: none; border: none; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: #2d3748; font-weight: 500; transition: background 0.15s; }
+  .question-btn:hover { background: #f7fafc; }
+  .question-btn.open { background: #ebf8ff; color: #1a365d; }
+  .q-num { min-width: 28px; height: 28px; background: #2b6cb0; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .question-btn.open .q-num { background: #1a365d; }
+  .arrow { margin-left: auto; font-size: 1rem; transition: transform 0.2s; color: #a0aec0; padding-left: 8px; flex-shrink: 0; }
+  .question-btn.open .arrow { transform: rotate(180deg); color: #2b6cb0; }
+  .answer { display: none; padding: 0 1.25rem 1.25rem 1.25rem; padding-left: 3.5rem; border-top: 1px solid #e8f0fe; background: #fafcff; }
+  .answer.open { display: block; }
+  .answer p { margin-bottom: 0.7rem; color: #2d3748; font-size: 0.92rem; }
+  .answer ul, .answer ol { margin: 0.5rem 0 0.7rem 1.2rem; }
+  .answer li { color: #2d3748; font-size: 0.92rem; margin-bottom: 0.3rem; }
+  .tag { display: inline-block; background: #ebf8ff; color: #2b6cb0; border: 1px solid #bee3f8; border-radius: 5px; padding: 1px 8px; font-size: 0.8rem; font-weight: 600; margin-right: 4px; }
+  .tag.green { background: #f0fff4; color: #276749; border-color: #c6f6d5; }
+  .tag.orange { background: #fffaf0; color: #c05621; border-color: #fbd38d; }
+  .tag.red { background: #fff5f5; color: #c53030; border-color: #fed7d7; }
+  pre { background: #1a202c; color: #e2e8f0; border-radius: 8px; padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.83rem; overflow-x: auto; margin: 0.7rem 0; line-height: 1.6; }
+  .keyword { color: #81e6d9; }
+  .comment { color: #68d391; font-style: italic; }
+  .string { color: #fbb6ce; }
+  .function { color: #90cdf4; }
+  .tip { background: #fffff0; border-left: 4px solid #d69e2e; border-radius: 0 8px 8px 0; padding: 0.7rem 1rem; margin: 0.7rem 0; font-size: 0.88rem; color: #744210; }
+  .note { background: #f0fff4; border-left: 4px solid #38a169; border-radius: 0 8px 8px 0; padding: 0.7rem 1rem; margin: 0.7rem 0; font-size: 0.88rem; color: #22543d; }
+  table { width: 100%; border-collapse: collapse; margin: 0.7rem 0; font-size: 0.88rem; }
+  th { background: #2b6cb0; color: white; padding: 8px 12px; text-align: left; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; }
+  tr:nth-child(even) td { background: #f7fafc; }
+  .diff { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0.7rem 0; }
+  .diff-box { border-radius: 8px; padding: 0.8rem; font-size: 0.88rem; }
+  .diff-box h4 { font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .diff-left { background: #ebf8ff; }
+  .diff-left h4 { color: #2b6cb0; }
+  .diff-right { background: #f0fff4; }
+  .diff-right h4 { color: #276749; }
+  .progress { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #2b6cb0; color: white; border-radius: 50px; padding: 0.5rem 1rem; font-size: 0.82rem; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  @media (max-width: 600px) { .diff { grid-template-columns: 1fr; } header h1 { font-size: 1.4rem; } main { padding: 1rem; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 C++ End Semester — Complete Study Guide</h1>
+  <p>2 Credits Paper &nbsp;•&nbsp; 4 Questions per unit &nbsp;•&nbsp; Simple English Answers</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showUnit(1)">Unit 1 <span class="unit-badge">Basics</span></button>
+  <button class="tab-btn" onclick="showUnit(2)">Unit 2 <span class="unit-badge">Classes</span></button>
+  <button class="tab-btn" onclick="showUnit(3)">Unit 3 <span class="unit-badge">Inheritance</span></button>
+  <button class="tab-btn" onclick="showUnit(4)">Unit 4 <span class="unit-badge">Polymorphism</span></button>
+</div>
+
+<main>
+
+<!-- ======= UNIT 1 ======= -->
+<div class="unit-section active" id="unit-1">
+  <div class="unit-header">
+    <h2>Unit 1 — Introduction to C++ &amp; Functions</h2>
+    <p>17 questions covering OOP concepts, C++ basics, variables, functions, and memory</p>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">1</span>Procedure Oriented Programming Languages<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Procedure-oriented programming (POP) means writing programs as a list of steps (procedures/functions) executed one by one.</p>
+      <ul>
+        <li><strong>Focus:</strong> HOW to do a task — step by step</li>
+        <li><strong>Data:</strong> Shared globally — any function can access it (less safe)</li>
+        <li><strong>Examples:</strong> C, Pascal, COBOL, FORTRAN</li>
+        <li><strong>Problem:</strong> Hard to manage in large programs — data gets messy</li>
+      </ul>
+      <div class="tip">💡 Think of it like a cooking recipe — step 1, step 2, step 3... straight from top to bottom.</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">2</span>Object Oriented Programming (OOP)<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>OOP organizes programs around <strong>objects</strong> — like real-world things that have both data and behavior.</p>
+      <ul>
+        <li><strong>Object</strong> = bundles data + functions together</li>
+        <li><strong>Focus:</strong> WHAT something is, not just how to do steps</li>
+        <li><strong>Examples:</strong> C++, Java, Python</li>
+      </ul>
+      <p><strong>4 main concepts of OOP:</strong></p>
+      <ul>
+        <li><span class="tag">Encapsulation</span> — Wrapping data and functions together, hiding internal details</li>
+        <li><span class="tag">Inheritance</span> — Child class reuses parent class code</li>
+        <li><span class="tag">Polymorphism</span> — One name, many forms</li>
+        <li><span class="tag">Abstraction</span> — Show only what's necessary, hide complexity</li>
+      </ul>
+      <div class="note">✅ OOP is more secure, reusable, and easier to maintain than POP.</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">3</span>Role of Objects and Classes in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>Class</strong> = Blueprint or template (like the design of a car)</p>
+      <p><strong>Object</strong> = An actual thing created from the blueprint (like the actual car)</p>
+<pre>
+class Car {
+public:
+    string color;
+    int speed;
+    void drive() { cout &lt;&lt; "Car is driving!"; }
+};
+
+int main() {
+    Car myCar;          <span class="comment">// myCar is an object of class Car</span>
+    myCar.color = "Red";
+    myCar.drive();
+}
+</pre>
+      <ul>
+        <li><strong>Class</strong> defines: attributes (color, speed) and behaviors (drive, stop)</li>
+        <li><strong>Object</strong> uses those attributes and behaviors</li>
+        <li>Many objects can be created from ONE class</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">4</span>Importance of Reusability in Object Oriented Programming<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>Reusability</strong> means writing code once and using it multiple times — no need to rewrite the same logic.</p>
+      <ul>
+        <li>Achieved through <strong>Inheritance</strong> — child class gets parent class features automatically</li>
+        <li><strong>Saves time</strong> — don't rewrite existing code</li>
+        <li><strong>Fewer bugs</strong> — already-tested code is reused</li>
+        <li><strong>Easy maintenance</strong> — fix in one place, fixed everywhere</li>
+      </ul>
+      <div class="tip">💡 Example: A "Vehicle" class with speed and fuel — Car, Truck, and Bike all inherit from it. You write the code once for Vehicle and all three get it!</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">5</span>Important Features of C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <ul>
+        <li><span class="tag">Object-Oriented</span> — Supports classes and objects</li>
+        <li><span class="tag">Encapsulation</span> — Hides data inside classes</li>
+        <li><span class="tag">Inheritance</span> — Child reuses parent's code</li>
+        <li><span class="tag">Polymorphism</span> — Same name, different behavior</li>
+        <li><span class="tag">Abstraction</span> — Hides complexity, shows only necessary info</li>
+        <li><span class="tag">Exception Handling</span> — Handle errors without crashing</li>
+        <li><span class="tag">Templates</span> — Write one function/class for all data types</li>
+        <li><span class="tag">Fast</span> — Compiled language, faster than Java</li>
+        <li><span class="tag">Both POP + OOP</span> — Supports both procedural and OOP styles</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">6</span>Iostream Classes in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><code>iostream</code> is a header file that provides input and output functionality.</p>
+<pre>
+#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x;
+    cin &gt;&gt; x;          <span class="comment">// Read input from keyboard</span>
+    cout &lt;&lt; x;         <span class="comment">// Print output to screen</span>
+    cerr &lt;&lt; "Error";   <span class="comment">// Print error messages</span>
+}
+</pre>
+      <ul>
+        <li><strong>cin</strong> — reads input from keyboard (uses &gt;&gt;)</li>
+        <li><strong>cout</strong> — prints output to screen (uses &lt;&lt;)</li>
+        <li><strong>cerr</strong> — prints error messages</li>
+        <li><strong>&lt;&lt;</strong> = insertion operator (sending data out)</li>
+        <li><strong>&gt;&gt;</strong> = extraction operator (taking data in)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">7</span>Comments in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Comments are notes for humans — the compiler completely ignores them.</p>
+<pre>
+<span class="comment">// This is a single-line comment</span>
+
+<span class="comment">/* This is a
+   multi-line comment */</span>
+
+int age = 20; <span class="comment">// This is an inline comment</span>
+</pre>
+      <ul>
+        <li><strong>Single line:</strong> starts with <code>//</code></li>
+        <li><strong>Multi-line:</strong> wrapped in <code>/* ... */</code></li>
+        <li><strong>Purpose:</strong> Explain code to yourself and other programmers</li>
+        <li>Make code readable and understandable</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">8</span>Variable Declaration in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Variables are containers that store data. You must declare them before using.</p>
+<pre>
+<span class="keyword">int</span>    age = 20;          <span class="comment">// Whole numbers</span>
+<span class="keyword">float</span>  price = 9.99;      <span class="comment">// Decimal numbers</span>
+<span class="keyword">double</span> pi = 3.14159;     <span class="comment">// Large decimal numbers</span>
+<span class="keyword">char</span>   grade = 'A';      <span class="comment">// Single character</span>
+<span class="keyword">bool</span>   pass = true;      <span class="comment">// True or false</span>
+<span class="keyword">string</span> name = "Riya";    <span class="comment">// Text</span>
+</pre>
+      <div class="tip">💡 Syntax: datatype variableName = value;</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">9</span>Use of const in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><code>const</code> makes a variable's value <strong>permanent</strong> — it can never be changed after being set.</p>
+<pre>
+const float PI = 3.14159;   <span class="comment">// Cannot be changed</span>
+const int MAX = 100;
+
+PI = 3;  <span class="comment">// ❌ ERROR! Cannot change a const</span>
+</pre>
+      <ul>
+        <li>Prevents accidental changes to important values</li>
+        <li>Makes code safer and self-documenting</li>
+        <li>Good for mathematical constants (PI, speed of light, etc.)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">10</span>Use of endl in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><code>endl</code> means "end line" — it moves the cursor to the next line after printing.</p>
+<pre>
+cout &lt;&lt; "Hello" &lt;&lt; endl;
+cout &lt;&lt; "World" &lt;&lt; endl;
+<span class="comment">// Output:
+// Hello
+// World</span>
+</pre>
+      <ul>
+        <li>Similar to <code>'\n'</code> (newline character)</li>
+        <li>But <code>endl</code> also <strong>flushes the buffer</strong> (clears output immediately)</li>
+        <li>Use <code>endl</code> when output must appear immediately</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">11</span>Importance of new and delete in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>new</strong> and <strong>delete</strong> are used for <strong>dynamic memory allocation</strong> — allocating memory while the program is running.</p>
+<pre>
+int* p = <span class="keyword">new</span> int;   <span class="comment">// Allocate memory for one int</span>
+*p = 50;
+cout &lt;&lt; *p;
+<span class="keyword">delete</span> p;            <span class="comment">// Free the memory</span>
+
+<span class="comment">// For arrays:</span>
+int* arr = <span class="keyword">new</span> int[5];
+<span class="keyword">delete</span>[] arr;       <span class="comment">// Free array memory</span>
+</pre>
+      <ul>
+        <li><strong>new</strong> — requests memory from the heap at runtime</li>
+        <li><strong>delete</strong> — frees that memory when done</li>
+        <li>Without <code>delete</code> → <strong>memory leak</strong> (memory fills up wastefully)</li>
+        <li>Very important for large programs</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">12</span>Program to Explain Simple Functions in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>A function is a named block of code that does a specific task. You call it whenever you need it.</p>
+<pre>
+#include &lt;iostream&gt;
+using namespace std;
+
+<span class="comment">// Function definition</span>
+int add(int a, int b) {
+    return a + b;
+}
+
+void greet(string name) {
+    cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; "!" &lt;&lt; endl;
+}
+
+int main() {
+    int result = add(5, 3);    <span class="comment">// Function call</span>
+    cout &lt;&lt; "Sum = " &lt;&lt; result &lt;&lt; endl;  <span class="comment">// Output: Sum = 8</span>
+
+    greet("Riya");             <span class="comment">// Output: Hello, Riya!</span>
+    return 0;
+}
+</pre>
+      <ul>
+        <li>Functions make code <strong>reusable</strong> — call the same function many times</li>
+        <li>Functions make code <strong>organized</strong> — each function does one job</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">13</span>Pass by Value vs Pass by Reference (Call by Value / Call by Reference)<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <div class="diff">
+        <div class="diff-box diff-left">
+          <h4>Pass by Value</h4>
+          <p>A COPY of the value is sent. Original is NOT changed.</p>
+        </div>
+        <div class="diff-box diff-right">
+          <h4>Pass by Reference</h4>
+          <p>The ACTUAL variable is sent. Original IS changed.</p>
+        </div>
+      </div>
+<pre>
+<span class="comment">// Pass by VALUE — original safe</span>
+void byValue(int x) {
+    x = 100;  <span class="comment">// Only copy changes</span>
+}
+
+<span class="comment">// Pass by REFERENCE — original changes</span>
+void byRef(int &amp;x) {
+    x = 100;  <span class="comment">// Actual variable changes</span>
+}
+
+int main() {
+    int a = 5;
+    byValue(a);  cout &lt;&lt; a;  <span class="comment">// Still 5</span>
+    byRef(a);    cout &lt;&lt; a;  <span class="comment">// Now 100</span>
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">14</span>Use of Return Statements<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>The <code>return</code> statement sends a value back from a function to where it was called.</p>
+<pre>
+int square(int n) {
+    return n * n;  <span class="comment">// Sends the result back</span>
+}
+
+int main() {
+    int result = square(4);  <span class="comment">// result = 16</span>
+    return 0;  <span class="comment">// 0 means "program ended successfully"</span>
+}
+</pre>
+      <ul>
+        <li>Functions with <code>int</code>, <code>float</code>, etc. MUST return a value</li>
+        <li>Functions with <code>void</code> do NOT return a value</li>
+        <li><code>return 0;</code> in <code>main()</code> = program ran successfully</li>
+        <li>Execution stops as soon as <code>return</code> is encountered</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">15</span>Default Arguments in Functions<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Default arguments are <strong>pre-set values</strong> for parameters — used when the caller doesn't pass a value.</p>
+<pre>
+void greet(string name = "World", int times = 1) {
+    for(int i = 0; i &lt; times; i++)
+        cout &lt;&lt; "Hello, " &lt;&lt; name &lt;&lt; "!" &lt;&lt; endl;
+}
+
+int main() {
+    greet();              <span class="comment">// Hello, World!</span>
+    greet("Riya");        <span class="comment">// Hello, Riya!</span>
+    greet("Aman", 3);     <span class="comment">// Hello, Aman! (3 times)</span>
+}
+</pre>
+      <ul>
+        <li>Default arguments must be at the <strong>right end</strong> of the parameter list</li>
+        <li>Makes functions more flexible</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">16</span>Concept of Inline Function<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>An <code>inline</code> function tells the compiler: "paste this function's code directly where it's called" instead of making a separate function call.</p>
+<pre>
+inline int square(int x) {
+    return x * x;
+}
+
+int main() {
+    cout &lt;&lt; square(5);  <span class="comment">// Compiler replaces with: 5 * 5</span>
+}
+</pre>
+      <ul>
+        <li><strong>Purpose:</strong> Avoids the overhead (time cost) of calling a function</li>
+        <li>Best for <strong>small, simple functions</strong> (1-3 lines)</li>
+        <li>Makes program faster</li>
+        <li>Not suitable for large functions — code size increases</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">17</span>Scenario: Importance of Functions in Programming<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>Scenario: Restaurant Billing System</strong></p>
+<pre>
+void takeOrder() {
+    cout &lt;&lt; "Taking customer's order..." &lt;&lt; endl;
+}
+
+float calculateTotal(float items[], int n) {
+    float total = 0;
+    for(int i = 0; i &lt; n; i++) total += items[i];
+    return total;
+}
+
+float applyDiscount(float total) {
+    return total * 0.9;  <span class="comment">// 10% discount</span>
+}
+
+void printBill(float amount) {
+    cout &lt;&lt; "Total Bill: Rs. " &lt;&lt; amount &lt;&lt; endl;
+}
+
+int main() {
+    takeOrder();
+    float items[] = {120, 80, 150};
+    float total = calculateTotal(items, 3);
+    total = applyDiscount(total);
+    printBill(total);
+}
+</pre>
+      <p><strong>Without functions:</strong> You'd write the same calculation code everywhere — messy and error-prone.</p>
+      <p><strong>With functions:</strong> Each task is in its own function — clean, organized, reusable.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======= UNIT 2 ======= -->
+<div class="unit-section" id="unit-2">
+  <div class="unit-header">
+    <h2>Unit 2 — Classes, Constructors &amp; Objects</h2>
+    <p>15 questions covering class structure, constructors, access specifiers, arrays, and destructors</p>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">1</span>Structure of a Class in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>A class is like a blueprint. It has <strong>data members</strong> (variables) and <strong>member functions</strong> (methods).</p>
+<pre>
+class Student {
+<span class="keyword">private</span>:               <span class="comment">// Hidden from outside</span>
+    int rollNo;
+    string name;
+
+<span class="keyword">public</span>:                <span class="comment">// Accessible from outside</span>
+    void setData(int r, string n) {
+        rollNo = r;
+        name = n;
+    }
+    void display() {
+        cout &lt;&lt; rollNo &lt;&lt; " - " &lt;&lt; name &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s;           <span class="comment">// Creating object</span>
+    s.setData(1, "Riya");
+    s.display();         <span class="comment">// Output: 1 - Riya</span>
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">2</span>Importance of Member Functions<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Member functions are functions that are defined <strong>inside a class</strong>. They work on the class's data.</p>
+      <ul>
+        <li>They keep <strong>data and behavior together</strong> (encapsulation)</li>
+        <li>They control <strong>how data is accessed and modified</strong></li>
+        <li>Can be <strong>private</strong> (internal use only) or <strong>public</strong> (accessible by anyone)</li>
+        <li>Make code more <strong>organized and secure</strong></li>
+      </ul>
+      <div class="note">✅ Without member functions, data inside a class cannot be manipulated properly.</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">3</span>Role of Access Specifiers<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Access specifiers control <strong>who can access</strong> the data and functions in a class.</p>
+      <table>
+        <tr><th>Specifier</th><th>Accessible From</th><th>Use</th></tr>
+        <tr><td><strong>public</strong></td><td>Anywhere (inside &amp; outside class)</td><td>Functions user should call</td></tr>
+        <tr><td><strong>private</strong></td><td>Only inside the class</td><td>Sensitive/internal data</td></tr>
+        <tr><td><strong>protected</strong></td><td>Class + derived (child) classes</td><td>Used in inheritance</td></tr>
+      </table>
+      <div class="tip">💡 Default in C++ class is <strong>private</strong>. Default in struct is <strong>public</strong>.</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">4</span>Concept of Constructors<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>A <strong>constructor</strong> is a special function that is automatically called when an object is created. It initializes the object's data.</p>
+<pre>
+class Car {
+public:
+    string color;
+    int speed;
+
+    Car() {            <span class="comment">// Constructor — called automatically</span>
+        color = "White";
+        speed = 0;
+        cout &lt;&lt; "Car is created!" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Car c;   <span class="comment">// Automatically calls Car() → "Car is created!"</span>
+}
+</pre>
+      <ul>
+        <li><strong>Same name as the class</strong></li>
+        <li><strong>No return type</strong> (not even void)</li>
+        <li>Called automatically at object creation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">5</span>Parameterized, Copy, and Default Argument Constructors<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+<pre>
+class Student {
+    string name; int age;
+public:
+    <span class="comment">// Default Constructor — no parameters</span>
+    Student() { name = "Unknown"; age = 0; }
+
+    <span class="comment">// Parameterized Constructor — takes values</span>
+    Student(string n, int a) { name = n; age = a; }
+
+    <span class="comment">// Copy Constructor — copies from another object</span>
+    Student(Student &amp;s) { name = s.name; age = s.age; }
+
+    <span class="comment">// Default Argument Constructor — has defaults</span>
+    Student(string n = "No Name", int a = 18) { name = n; age = a; }
+};
+
+int main() {
+    Student s1;                   <span class="comment">// Default</span>
+    Student s2("Riya", 20);       <span class="comment">// Parameterized</span>
+    Student s3(s2);               <span class="comment">// Copy</span>
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">6</span>Constructor Overloading<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Having <strong>multiple constructors</strong> in the same class with different parameters. C++ chooses the right one based on arguments passed.</p>
+<pre>
+class Box {
+public:
+    int length, width, height;
+
+    Box() { length = width = height = 1; }              <span class="comment">// No args</span>
+    Box(int l) { length = l; width = height = 1; }      <span class="comment">// 1 arg</span>
+    Box(int l, int w, int h) { length=l; width=w; height=h; } <span class="comment">// 3 args</span>
+};
+
+int main() {
+    Box b1;          <span class="comment">// Calls first constructor</span>
+    Box b2(5);       <span class="comment">// Calls second</span>
+    Box b3(3,4,5);   <span class="comment">// Calls third</span>
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">7</span>Class Conversion in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Converting one type to another — either basic type to class or class to basic type.</p>
+<pre>
+class Celsius {
+    float temp;
+public:
+    Celsius(float t) { temp = t; }
+
+    <span class="comment">// Convert Celsius to Fahrenheit (class to basic)</span>
+    operator float() {
+        return (temp * 9/5) + 32;
+    }
+};
+
+int main() {
+    Celsius c(100);
+    float f = c;    <span class="comment">// Conversion: 100°C → 212°F</span>
+    cout &lt;&lt; f;
+}
+</pre>
+      <p>Conversion can be done using <strong>conversion constructors</strong> or <strong>conversion functions</strong>.</p>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">8</span>Manipulation on Private Data Members<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Private data cannot be accessed directly from outside the class. We use <strong>getter</strong> and <strong>setter</strong> functions.</p>
+<pre>
+class BankAccount {
+private:
+    float balance;    <span class="comment">// Cannot access directly from outside</span>
+
+public:
+    void setBalance(float b) {   <span class="comment">// Setter</span>
+        if(b &gt;= 0) balance = b;
+        else cout &lt;&lt; "Invalid amount!";
+    }
+    float getBalance() {          <span class="comment">// Getter</span>
+        return balance;
+    }
+};
+
+int main() {
+    BankAccount acc;
+    acc.setBalance(5000);
+    cout &lt;&lt; acc.getBalance();    <span class="comment">// 5000</span>
+    <span class="comment">// acc.balance = -100; ❌ ERROR - private!</span>
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">9</span>Relationship Between Object and Memory<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <ul>
+        <li>Each object gets its <strong>own memory</strong> for data members</li>
+        <li><strong>Member functions</strong> are shared — stored only once in memory</li>
+        <li>Objects on <strong>stack</strong>: memory freed automatically when out of scope</li>
+        <li>Objects on <strong>heap</strong> (using new): must free with <code>delete</code></li>
+      </ul>
+<pre>
+Student s1;               <span class="comment">// Stack — auto freed</span>
+Student* s2 = new Student; <span class="comment">// Heap — need delete</span>
+delete s2;                <span class="comment">// Free heap memory</span>
+</pre>
+      <div class="tip">💡 Static objects (stack) are faster. Dynamic objects (heap) are flexible in size.</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">10</span>Concept of Array<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>An array is a collection of elements of the <strong>same data type</strong>, stored together in memory.</p>
+<pre>
+int marks[5] = {90, 85, 78, 92, 88};
+
+cout &lt;&lt; marks[0];   <span class="comment">// 90 (index starts from 0)</span>
+cout &lt;&lt; marks[4];   <span class="comment">// 88 (last element)</span>
+
+<span class="comment">// Loop through array</span>
+for(int i = 0; i &lt; 5; i++) {
+    cout &lt;&lt; marks[i] &lt;&lt; " ";
+}
+</pre>
+      <ul>
+        <li>Index starts from <strong>0</strong></li>
+        <li>All elements are the <strong>same type</strong></li>
+        <li>Size is fixed when declared</li>
+        <li>Stored in <strong>continuous memory</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">11</span>Concept of Array of Objects<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>An array where each element is an <strong>object</strong> of a class.</p>
+<pre>
+class Student {
+public:
+    string name;
+    int marks;
+    void display() {
+        cout &lt;&lt; name &lt;&lt; " : " &lt;&lt; marks &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s[3];       <span class="comment">// Array of 3 Student objects</span>
+
+    s[0].name = "Riya"; s[0].marks = 90;
+    s[1].name = "Aman"; s[1].marks = 85;
+    s[2].name = "Zara"; s[2].marks = 92;
+
+    for(int i = 0; i &lt; 3; i++)
+        s[i].display();
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">12</span>How Strings Can Be a Data Member<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><code>string</code> is a built-in data type in C++ (from <code>&lt;string&gt;</code> header). It can be used as a data member inside a class just like int or float.</p>
+<pre>
+#include &lt;string&gt;
+using namespace std;
+
+class Employee {
+private:
+    string name;      <span class="comment">// String as data member</span>
+    string department;
+    int id;
+
+public:
+    Employee(string n, string d, int i) {
+        name = n; department = d; id = i;
+    }
+    void display() {
+        cout &lt;&lt; id &lt;&lt; " | " &lt;&lt; name &lt;&lt; " | " &lt;&lt; department;
+    }
+};
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">13</span>Importance of Destructors<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>A <strong>destructor</strong> is automatically called when an object is <strong>destroyed</strong>. It cleans up resources.</p>
+<pre>
+class Database {
+public:
+    Database() {
+        cout &lt;&lt; "Database opened" &lt;&lt; endl;
+    }
+    ~Database() {    <span class="comment">// Destructor — tilde ~</span>
+        cout &lt;&lt; "Database closed" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Database db;     <span class="comment">// Constructor called: "Database opened"</span>
+    <span class="comment">// ... use database ...</span>
+}   <span class="comment">// Destructor called: "Database closed" (auto)</span>
+</pre>
+      <ul>
+        <li>Prevents <strong>memory leaks</strong></li>
+        <li>Closes open files or connections</li>
+        <li>Same name as class but with <code>~</code> prefix</li>
+        <li>Cannot be overloaded, takes no parameters</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">14</span>Difference Between Constructor and Destructor<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <table>
+        <tr><th>Feature</th><th>Constructor</th><th>Destructor</th></tr>
+        <tr><td>When called</td><td>Object is created</td><td>Object is destroyed</td></tr>
+        <tr><td>Purpose</td><td>Initialize object data</td><td>Free/clean up resources</td></tr>
+        <tr><td>Overloading</td><td>✅ Can be overloaded</td><td>❌ Cannot be overloaded</td></tr>
+        <tr><td>Parameters</td><td>Can take parameters</td><td>No parameters</td></tr>
+        <tr><td>Return type</td><td>None</td><td>None</td></tr>
+        <tr><td>Name</td><td>ClassName()</td><td>~ClassName()</td></tr>
+        <tr><td>Count</td><td>Multiple allowed</td><td>Only one</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">15</span>Scenario: Constructors in Real-World Applications<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>Scenario: Bank Account System</strong></p>
+<pre>
+class BankAccount {
+    string accountHolder;
+    int accountNumber;
+    float balance;
+
+public:
+    <span class="comment">// When you OPEN an account</span>
+    BankAccount(string name, int accNo, float initial = 0) {
+        accountHolder = name;
+        accountNumber = accNo;
+        balance = initial;
+        cout &lt;&lt; "Account created for " &lt;&lt; name &lt;&lt; endl;
+    }
+
+    <span class="comment">// Copy — duplicate account record</span>
+    BankAccount(BankAccount &amp;b) {
+        accountHolder = b.accountHolder;
+        accountNumber = b.accountNumber + 1;
+        balance = b.balance;
+    }
+
+    <span class="comment">// When account is CLOSED</span>
+    ~BankAccount() {
+        cout &lt;&lt; "Account closed. Goodbye, " &lt;&lt; accountHolder;
+    }
+};
+</pre>
+      <p>Just like opening a bank account sets your name, number, and initial balance — a constructor does the same for objects automatically.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======= UNIT 3 ======= -->
+<div class="unit-section" id="unit-3">
+  <div class="unit-header">
+    <h2>Unit 3 — Operator Overloading &amp; Inheritance</h2>
+    <p>9 questions covering operator overloading, inheritance types, and containership</p>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">1</span>Concept of Operator Overloading (What, Types, Importance, Role)<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>What is it?</strong> Giving new meaning to existing operators (+, -, *, etc.) when used with objects of a class.</p>
+<pre>
+class Complex {
+    float real, imag;
+public:
+    Complex(float r, float i) { real=r; imag=i; }
+
+    <span class="comment">// Overloading the + operator</span>
+    Complex operator+(Complex c) {
+        return Complex(real + c.real, imag + c.imag);
+    }
+
+    void display() {
+        cout &lt;&lt; real &lt;&lt; " + " &lt;&lt; imag &lt;&lt; "i" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Complex c1(2, 3), c2(1, 4);
+    Complex c3 = c1 + c2;   <span class="comment">// Uses overloaded + operator</span>
+    c3.display();            <span class="comment">// Output: 3 + 7i</span>
+}
+</pre>
+      <ul>
+        <li><strong>Importance:</strong> Makes code more natural and readable. e.g., <code>c1 + c2</code> is clearer than <code>c1.add(c2)</code></li>
+        <li><strong>Types of operators that can be overloaded:</strong></li>
+        <ul>
+          <li><span class="tag">Unary</span> — ++, --, -(negative), !</li>
+          <li><span class="tag">Binary</span> — +, -, *, /, %, =</li>
+          <li><span class="tag">Relational</span> — ==, !=, &lt;, &gt;</li>
+          <li><span class="tag">Stream</span> — &lt;&lt;, &gt;&gt; (for cin/cout with objects)</li>
+        </ul>
+        <li><strong>Role:</strong> Allows objects to behave like built-in types in expressions</li>
+      </ul>
+      <div class="tip">💡 You CANNOT overload: :: (scope), . (member access), .* (member pointer), ?: (ternary)</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">2</span>Concept of Inheritance<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Inheritance means a <strong>child class</strong> automatically gets the properties and methods of a <strong>parent class</strong>.</p>
+<pre>
+class Animal {           <span class="comment">// Parent (Base) class</span>
+public:
+    string name;
+    void eat() { cout &lt;&lt; name &lt;&lt; " is eating." &lt;&lt; endl; }
+    void sleep() { cout &lt;&lt; name &lt;&lt; " is sleeping." &lt;&lt; endl; }
+};
+
+class Dog : public Animal {   <span class="comment">// Child (Derived) class</span>
+public:
+    void bark() { cout &lt;&lt; name &lt;&lt; " says: Woof!" &lt;&lt; endl; }
+};
+
+int main() {
+    Dog d;
+    d.name = "Tommy";
+    d.eat();    <span class="comment">// Inherited from Animal</span>
+    d.sleep();  <span class="comment">// Inherited from Animal</span>
+    d.bark();   <span class="comment">// Dog's own method</span>
+}
+</pre>
+      <div class="note">✅ Reuse code without rewriting it. Dog automatically gets eat() and sleep().</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">3</span>Role of Protected Access Specifier in Inheritance<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><code>protected</code> members are accessible in the <strong>class itself</strong> AND its <strong>child classes</strong>, but NOT from outside.</p>
+<pre>
+class Person {
+protected:
+    string name;    <span class="comment">// Accessible in child classes</span>
+    int age;
+public:
+    void setInfo(string n, int a) { name=n; age=a; }
+};
+
+class Student : public Person {
+public:
+    void display() {
+        cout &lt;&lt; name &lt;&lt; ", Age: " &lt;&lt; age; <span class="comment">// ✅ Works!</span>
+    }
+};
+
+int main() {
+    Student s;
+    s.setInfo("Riya", 20);
+    s.display();
+    <span class="comment">// s.name = "Aman"; ❌ ERROR — protected, not public!</span>
+}
+</pre>
+      <div class="tip">💡 protected = "family secret" — parent shares with child, but not with strangers.</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">4</span>Concept of Overriding Member Functions<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>The child class <strong>redefines</strong> a function that already exists in the parent class with the same name and parameters.</p>
+<pre>
+class Animal {
+public:
+    void sound() { cout &lt;&lt; "Some generic sound" &lt;&lt; endl; }
+};
+
+class Dog : public Animal {
+public:
+    void sound() {        <span class="comment">// Overrides Animal's sound()</span>
+        cout &lt;&lt; "Woof! Woof!" &lt;&lt; endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    void sound() {        <span class="comment">// Overrides Animal's sound()</span>
+        cout &lt;&lt; "Meow!" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Dog d; d.sound();    <span class="comment">// Woof! Woof!</span>
+    Cat c; c.sound();    <span class="comment">// Meow!</span>
+}
+</pre>
+      <p>The child's version is used when called on a child object.</p>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">5</span>Analyze Possible Combinations of Inheritance<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <table>
+        <tr><th>Type</th><th>Structure</th><th>Description</th></tr>
+        <tr><td><strong>Single</strong></td><td>A → B</td><td>One parent, one child</td></tr>
+        <tr><td><strong>Multiple</strong></td><td>A, B → C</td><td>C inherits from both A and B</td></tr>
+        <tr><td><strong>Multilevel</strong></td><td>A → B → C</td><td>Chain: Grandparent → Parent → Child</td></tr>
+        <tr><td><strong>Hierarchical</strong></td><td>A → B, A → C</td><td>One parent, multiple children</td></tr>
+        <tr><td><strong>Hybrid</strong></td><td>Mix of above</td><td>Combination of two or more types</td></tr>
+      </table>
+<pre>
+<span class="comment">// Multilevel Inheritance example:</span>
+class Animal { };           <span class="comment">// Grandparent</span>
+class Dog : public Animal { };   <span class="comment">// Parent</span>
+class Puppy : public Dog { };    <span class="comment">// Child</span>
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">6</span>Hybrid Inheritance and Its Importance<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Hybrid inheritance is a <strong>combination of two or more types</strong> of inheritance (e.g., hierarchical + multiple).</p>
+<pre>
+        A          <span class="comment">← Base class</span>
+       / \
+      B   C        <span class="comment">← Hierarchical</span>
+       \ /
+        D          <span class="comment">← Multiple (inherits B and C)</span>
+</pre>
+      <ul>
+        <li><strong>Importance:</strong> Maximum code reuse, most flexible structure</li>
+        <li><strong>Problem:</strong> Can cause <strong>Diamond Problem</strong> — D inherits A's members twice (via B and via C)</li>
+        <li><strong>Solution:</strong> Use <code>virtual</code> base class</li>
+      </ul>
+<pre>
+class B : virtual public A { };  <span class="comment">// Virtual inheritance</span>
+class C : virtual public A { };
+class D : public B, public C { }; <span class="comment">// Diamond solved</span>
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">7</span>Containership in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Containership (also called <strong>composition</strong> or "Has-A" relationship) means one class <strong>contains an object</strong> of another class as its member.</p>
+<pre>
+class Engine {
+public:
+    int horsepower;
+    Engine(int hp) { horsepower = hp; }
+    void start() { cout &lt;&lt; "Engine started!" &lt;&lt; endl; }
+};
+
+class Car {
+public:
+    Engine e;       <span class="comment">// Car "has an" Engine — containership</span>
+    string brand;
+
+    Car(string b, int hp) : e(hp) { brand = b; }
+
+    void drive() {
+        e.start();  <span class="comment">// Using contained object</span>
+        cout &lt;&lt; brand &lt;&lt; " is driving." &lt;&lt; endl;
+    }
+};
+</pre>
+      <div class="diff">
+        <div class="diff-box diff-left">
+          <h4>Inheritance (Is-A)</h4>
+          <p>Dog IS-A Animal</p>
+        </div>
+        <div class="diff-box diff-right">
+          <h4>Containership (Has-A)</h4>
+          <p>Car HAS-A Engine</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">8</span>Concept of Classes Within Classes (Nested Classes)<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>A <strong>nested class</strong> is a class defined inside another class.</p>
+<pre>
+class University {
+public:
+    string name;
+
+    class Department {       <span class="comment">// Nested class inside University</span>
+    public:
+        string deptName;
+        int students;
+
+        void display() {
+            cout &lt;&lt; deptName &lt;&lt; ": " &lt;&lt; students &lt;&lt; " students" &lt;&lt; endl;
+        }
+    };
+
+    void info() {
+        Department d;
+        d.deptName = "CS";
+        d.students = 120;
+        d.display();
+    }
+};
+
+int main() {
+    University u;
+    u.name = "MIT";
+    u.info();
+
+    University::Department csDept;   <span class="comment">// Access nested class</span>
+    csDept.deptName = "EE";
+}
+</pre>
+      <ul>
+        <li>Used for <strong>logical grouping</strong> of related classes</li>
+        <li>Nested class is like a "helper" to the outer class</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">9</span>Scenario: Inheritance in Real-World Applications<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>Scenario: University Management System</strong></p>
+<pre>
+class Person {           <span class="comment">// Base class — shared by everyone</span>
+protected:
+    string name;
+    int age;
+public:
+    Person(string n, int a) { name=n; age=a; }
+    void display() { cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; ", Age: " &lt;&lt; age; }
+};
+
+class Student : public Person {  <span class="comment">// Student IS-A Person</span>
+    int rollNo;
+    float gpa;
+public:
+    Student(string n, int a, int r, float g)
+        : Person(n, a) { rollNo=r; gpa=g; }
+    void display() {
+        Person::display();
+        cout &lt;&lt; ", Roll: " &lt;&lt; rollNo &lt;&lt; ", GPA: " &lt;&lt; gpa;
+    }
+};
+
+class Teacher : public Person {  <span class="comment">// Teacher IS-A Person</span>
+    string subject;
+    float salary;
+public:
+    Teacher(string n, int a, string s, float sal)
+        : Person(n, a) { subject=s; salary=sal; }
+};
+</pre>
+      <p>Both <code>Student</code> and <code>Teacher</code> inherit name and age from <code>Person</code> — no need to rewrite that code!</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======= UNIT 4 ======= -->
+<div class="unit-section" id="unit-4">
+  <div class="unit-header">
+    <h2>Unit 4 — Polymorphism, Templates &amp; Exception Handling</h2>
+    <p>9 questions covering polymorphism, virtual functions, templates, and exception handling</p>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">1</span>Concept of Polymorphism in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><strong>Polymorphism</strong> = "Poly" (many) + "morph" (forms) = One name, many behaviors.</p>
+      <table>
+        <tr><th>Type</th><th>When decided</th><th>How</th></tr>
+        <tr><td><strong>Compile-time</strong> (Static)</td><td>At compile time</td><td>Function overloading, Operator overloading</td></tr>
+        <tr><td><strong>Runtime</strong> (Dynamic)</td><td>While running</td><td>Virtual functions</td></tr>
+      </table>
+<pre>
+<span class="comment">// Runtime Polymorphism example:</span>
+class Shape {
+public:
+    virtual void draw() { cout &lt;&lt; "Drawing shape" &lt;&lt; endl; }
+};
+
+class Circle : public Shape {
+public:
+    void draw() { cout &lt;&lt; "Drawing Circle ⭕" &lt;&lt; endl; }
+};
+
+class Square : public Shape {
+public:
+    void draw() { cout &lt;&lt; "Drawing Square ■" &lt;&lt; endl; }
+};
+
+int main() {
+    Shape* s;
+    Circle c;  Square sq;
+
+    s = &amp;c;  s-&gt;draw();    <span class="comment">// Drawing Circle</span>
+    s = &amp;sq; s-&gt;draw();    <span class="comment">// Drawing Square</span>
+}
+</pre>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">2</span>Concept of Pointers to Objects<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>A pointer that stores the <strong>memory address of an object</strong> instead of a basic variable.</p>
+<pre>
+class Student {
+public:
+    string name;
+    void display() { cout &lt;&lt; "Name: " &lt;&lt; name &lt;&lt; endl; }
+};
+
+int main() {
+    Student s;
+    s.name = "Riya";
+
+    Student* ptr = &amp;s;    <span class="comment">// Pointer to object s</span>
+
+    ptr-&gt;name = "Aman";   <span class="comment">// Access with arrow operator (->)</span>
+    ptr-&gt;display();       <span class="comment">// Name: Aman</span>
+
+    <span class="comment">// Dynamic object:</span>
+    Student* ptr2 = new Student;
+    ptr2-&gt;name = "Zara";
+    ptr2-&gt;display();
+    delete ptr2;           <span class="comment">// Free memory!</span>
+}
+</pre>
+      <ul>
+        <li>Use <code>.</code> for normal objects, <code>-&gt;</code> for pointer to object</li>
+        <li>Essential for <strong>polymorphism</strong> — base class pointer can point to derived class objects</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">3</span>Concept of Virtual Functions<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>A <code>virtual</code> function is declared in the base class and <strong>overridden in derived classes</strong>. It enables runtime polymorphism — the correct version is called based on the actual object type.</p>
+<pre>
+class Animal {
+public:
+    virtual void sound() {     <span class="comment">// virtual keyword!</span>
+        cout &lt;&lt; "Some sound" &lt;&lt; endl;
+    }
+};
+
+class Dog : public Animal {
+public:
+    void sound() {             <span class="comment">// Override</span>
+        cout &lt;&lt; "Woof!" &lt;&lt; endl;
+    }
+};
+
+class Cat : public Animal {
+public:
+    void sound() {             <span class="comment">// Override</span>
+        cout &lt;&lt; "Meow!" &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Animal* a;
+    Dog d;  Cat c;
+
+    a = &amp;d;  a-&gt;sound();   <span class="comment">// Woof! (correct!)</span>
+    a = &amp;c;  a-&gt;sound();   <span class="comment">// Meow! (correct!)</span>
+}
+</pre>
+      <div class="note">✅ Without <code>virtual</code>, Animal's sound() would be called for both. With <code>virtual</code>, the right version is called.</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">4</span>Relationship Between Virtual Functions and Dynamic Binding<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <div class="diff">
+        <div class="diff-box diff-left">
+          <h4>Static Binding</h4>
+          <p>Function decided at compile time. Normal functions. Faster but less flexible.</p>
+        </div>
+        <div class="diff-box diff-right">
+          <h4>Dynamic Binding</h4>
+          <p>Function decided at runtime. Virtual functions. Flexible — correct version called based on actual object.</p>
+        </div>
+      </div>
+      <p><strong>How they connect:</strong> When a function is declared <code>virtual</code>, C++ uses a <strong>vtable</strong> (virtual table) — a lookup table that stores the correct function address for each class. At runtime, the program checks this table to call the right function.</p>
+<pre>
+Animal* a = new Dog();   <span class="comment">// Base pointer, derived object</span>
+a-&gt;sound();   
+<span class="comment">// Static binding: would call Animal::sound()
+// Dynamic binding (virtual): calls Dog::sound() ✅</span>
+</pre>
+      <div class="tip">💡 Dynamic binding is what makes runtime polymorphism actually work!</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">5</span>The Purpose of this Pointer<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p><code>this</code> is a special pointer that points to the <strong>current object</strong> — the object that called the function.</p>
+<pre>
+class Student {
+    string name;
+    int age;
+public:
+    <span class="comment">// Problem: parameter name same as member name</span>
+    void setData(string name, int age) {
+        this-&gt;name = name;   <span class="comment">// this->name = member, name = parameter</span>
+        this-&gt;age  = age;
+    }
+
+    <span class="comment">// Returning the current object itself</span>
+    Student&amp; increment() {
+        age++;
+        return *this;        <span class="comment">// Return current object</span>
+    }
+
+    void display() {
+        cout &lt;&lt; name &lt;&lt; ", " &lt;&lt; age &lt;&lt; endl;
+    }
+};
+
+int main() {
+    Student s;
+    s.setData("Riya", 20);
+    s.increment().increment();   <span class="comment">// Method chaining</span>
+    s.display();    <span class="comment">// Riya, 22</span>
+}
+</pre>
+      <ul>
+        <li>Resolve ambiguity when member names = parameter names</li>
+        <li>Return current object for <strong>method chaining</strong></li>
+        <li>Pass current object to another function</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">6</span>Concepts of Templates in C++ (Types + Example Program)<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Templates let you write <strong>one function or class</strong> that works for <strong>any data type</strong>.</p>
+      <p><strong>Type 1: Function Template</strong></p>
+<pre>
+template &lt;typename T&gt;
+T findMax(T a, T b) {
+    return (a &gt; b) ? a : b;
+}
+
+int main() {
+    cout &lt;&lt; findMax(3, 7);       <span class="comment">// Works for int → 7</span>
+    cout &lt;&lt; findMax(3.5, 2.1);   <span class="comment">// Works for float → 3.5</span>
+    cout &lt;&lt; findMax('a', 'z');   <span class="comment">// Works for char → z</span>
+}
+</pre>
+      <p><strong>Type 2: Class Template</strong></p>
+<pre>
+template &lt;typename T&gt;
+class Stack {
+    T data[100];
+    int top;
+public:
+    Stack() { top = -1; }
+    void push(T x) { data[++top] = x; }
+    T pop() { return data[top--]; }
+};
+
+int main() {
+    Stack&lt;int&gt; intStack;      <span class="comment">// Stack of integers</span>
+    Stack&lt;string&gt; strStack;   <span class="comment">// Stack of strings</span>
+    intStack.push(10);
+    strStack.push("Hello");
+}
+</pre>
+      <div class="note">✅ Without templates, you'd write separate add() for int, float, double... Templates solve this!</div>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">7</span>Concept of Exception Handling in C++<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Exception handling lets you handle <strong>runtime errors gracefully</strong> — the program doesn't crash, instead it handles the error properly.</p>
+      <p><strong>3 keywords: try, catch, throw</strong></p>
+<pre>
+int divide(int a, int b) {
+    if(b == 0)
+        throw "Division by zero!";    <span class="comment">// throw the error</span>
+    return a / b;
+}
+
+int main() {
+    try {                              <span class="comment">// try risky code</span>
+        int result = divide(10, 0);
+        cout &lt;&lt; result;
+    }
+    catch(const char* msg) {           <span class="comment">// catch the error</span>
+        cout &lt;&lt; "Error: " &lt;&lt; msg &lt;&lt; endl;
+    }
+
+    cout &lt;&lt; "Program continues..." &lt;&lt; endl;
+}
+<span class="comment">// Output:
+// Error: Division by zero!
+// Program continues...</span>
+</pre>
+      <ul>
+        <li><code>try</code> — wraps the risky code</li>
+        <li><code>throw</code> — signals that an error occurred</li>
+        <li><code>catch</code> — handles the error</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">8</span>Use of Multiple Catch Statements<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Multiple <code>catch</code> blocks allow handling <strong>different types of errors</strong> in different ways.</p>
+<pre>
+void testErrors(int x) {
+    if(x == 1) throw 100;           <span class="comment">// Throw int error</span>
+    if(x == 2) throw "File error";  <span class="comment">// Throw string error</span>
+    if(x == 3) throw 3.14;          <span class="comment">// Throw float error</span>
+}
+
+int main() {
+    for(int i = 1; i &lt;= 4; i++) {
+        try {
+            testErrors(i);
+        }
+        catch(int e) {
+            cout &lt;&lt; "Integer error: " &lt;&lt; e &lt;&lt; endl;
+        }
+        catch(const char* e) {
+            cout &lt;&lt; "String error: " &lt;&lt; e &lt;&lt; endl;
+        }
+        catch(float e) {
+            cout &lt;&lt; "Float error: " &lt;&lt; e &lt;&lt; endl;
+        }
+        catch(...) {
+            cout &lt;&lt; "Unknown error!" &lt;&lt; endl;  <span class="comment">// Catch-all</span>
+        }
+    }
+}
+</pre>
+      <ul>
+        <li>Catches are checked <strong>in order</strong> — first matching catch is executed</li>
+        <li><code>catch(...)</code> = catch ALL types — always put it last</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <button class="question-btn" onclick="toggle(this)">
+      <span class="q-num">9</span>Significance of Polymorphism in Modern Programming Languages<span class="arrow">▼</span>
+    </button>
+    <div class="answer">
+      <p>Polymorphism is one of the most important concepts in modern programming. Here's why it matters:</p>
+      <ul>
+        <li><span class="tag green">Flexibility</span> — One interface works for many types. Write once, apply everywhere.</li>
+        <li><span class="tag green">Extensibility</span> — Add new classes without changing existing code</li>
+        <li><span class="tag green">Maintainability</span> — Cleaner, less code duplication</li>
+        <li><span class="tag green">Real-world modeling</span> — Things behave differently based on context</li>
+        <li><span class="tag green">Framework foundation</span> — Most UI frameworks, game engines rely on polymorphism</li>
+      </ul>
+<pre>
+<span class="comment">// Real-world example: Payment system</span>
+class Payment {
+public:
+    virtual void pay(float amount) = 0;  <span class="comment">// Pure virtual</span>
+};
+
+class CreditCard : public Payment {
+public:
+    void pay(float a) { cout &lt;&lt; "Paid Rs." &lt;&lt; a &lt;&lt; " via Credit Card"; }
+};
+
+class UPI : public Payment {
+public:
+    void pay(float a) { cout &lt;&lt; "Paid Rs." &lt;&lt; a &lt;&lt; " via UPI"; }
+};
+
+class Cash : public Payment {
+public:
+    void pay(float a) { cout &lt;&lt; "Paid Rs." &lt;&lt; a &lt;&lt; " in Cash"; }
+};
+
+<span class="comment">// All use the same pay() — but behavior differs!</span>
+void processPayment(Payment* p, float amount) {
+    p-&gt;pay(amount);  <span class="comment">// Polymorphism in action</span>
+}
+</pre>
+      <div class="note">✅ Without polymorphism, you'd need if-else or switch statements for every payment type — ugly and hard to extend!</div>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<div class="progress" id="progress">Unit 1 — 0 / 17 answered</div>
+
+<script>
+function showUnit(num) {
+  document.querySelectorAll('.unit-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('unit-' + num).classList.add('active');
+  document.querySelectorAll('.tab-btn')[num-1].classList.add('active');
+  updateProgress();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function toggle(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  answer.classList.toggle('open', !isOpen);
+  updateProgress();
+}
+
+const unitCounts = {1: 17, 2: 15, 3: 9, 4: 9};
+const unitNames = {1: 'Unit 1 — Basics', 2: 'Unit 2 — Classes', 3: 'Unit 3 — Inheritance', 4: 'Unit 4 — Polymorphism'};
+
+function updateProgress() {
+  const activeUnit = document.querySelector('.unit-section.active');
+  if (!activeUnit) return;
+  const unitNum = parseInt(activeUnit.id.split('-')[1]);
+  const total = unitCounts[unitNum];
+  const opened = activeUnit.querySelectorAll('.answer.open').length;
+  document.getElementById('progress').textContent = unitNames[unitNum] + ' — ' + opened + ' / ' + total + ' viewed';
+}
+
+updateProgress();
+</script>
+</body>
+</html>
